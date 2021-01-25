@@ -139,10 +139,14 @@ func printRawIssuePreview(out io.Writer, issue *api.Issue) error {
 	return nil
 }
 
+var now = func() time.Time {
+	return time.Now()
+}
+
 func printHumanIssuePreview(opts *ViewOptions, issue *api.Issue) error {
 	out := opts.IO.Out
-	now := time.Now()
-	ago := now.Sub(issue.CreatedAt)
+	currentTime := now()
+	ago := currentTime.Sub(issue.CreatedAt)
 	cs := opts.IO.ColorScheme()
 
 	// Header (Title and State)

@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os/exec"
 	"testing"
+	"time"
 
 	"github.com/cli/cli/internal/config"
 	"github.com/cli/cli/internal/ghrepo"
@@ -251,6 +252,8 @@ func TestIssueView_tty_Preview(t *testing.T) {
 	}
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
+			parsed, _ := time.Parse(time.RFC3339, "2021-01-23T04:06:55Z")
+			now = func() time.Time { return parsed }
 			http := &httpmock.Registry{}
 			defer http.Verify(t)
 
